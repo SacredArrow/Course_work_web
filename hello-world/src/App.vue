@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <figure class="image container is-256x256">
+  <img alt="RNA" src="./assets/rna3.png">
+</figure>
+    <!-- <img alt="Vue logo" src="./assets/rna2.png"> -->
     <Example> </Example>
   </div>
 </template>
