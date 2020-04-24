@@ -79,17 +79,17 @@
           Made in 2020 as part of course project.
         </p>
         <span class="icon has-text-warning">
-        <a href="https://github.com/SacredArrow/Course_work_web">
+        <a href="https://github.com/SacredArrow/Course_work_web" target="_blank">
           <font-awesome-icon :icon="['fab', 'github']" />
         </a>
       </span>
       <span class="icon has-text-warning">
-      <a href="https://github.com/SacredArrow/Secondary_structure_public">
+      <a href="https://github.com/SacredArrow/Secondary_structure_public" target="_blank">
         <font-awesome-icon :icon="['fab', 'github']" />
       </a>
     </span>
     <span class="icon has-text-warning">
-    <a href="https://github.com/LuninaPolina/SecondaryStructureAnalyzer">
+    <a href="https://github.com/LuninaPolina/SecondaryStructureAnalyzer" target="_blank">
       <font-awesome-icon :icon="['fab', 'github']" />
     </a>
   </span>
@@ -104,7 +104,6 @@
 <script>
 export default { // TODO: Sanitizing, beautfying
   name: 'Example',
-  el: '#app-5',
   data() {
     return {
       message: 'RNA secondary structure prediction',
