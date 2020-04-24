@@ -76,11 +76,23 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          Some useful info. Or <strong>useful</strong>. <a href="https://math.spbu.ru/rus/">Links</a> maybe.
+          Made in 2020 as part of course project.
         </p>
-        <a href="https://github.com/LuninaPolina/SecondaryStructureAnalyzer">
+        <span class="icon has-text-warning">
+        <a href="https://github.com/SacredArrow/Course_work_web">
           <font-awesome-icon :icon="['fab', 'github']" />
         </a>
+      </span>
+      <span class="icon has-text-warning">
+      <a href="https://github.com/SacredArrow/Secondary_structure_public">
+        <font-awesome-icon :icon="['fab', 'github']" />
+      </a>
+    </span>
+    <span class="icon has-text-warning">
+    <a href="https://github.com/LuninaPolina/SecondaryStructureAnalyzer">
+      <font-awesome-icon :icon="['fab', 'github']" />
+    </a>
+  </span>
       </div>
     </footer>
     <!-- <button class="button is-warning" v-on:click="getSequence">Получить результат</button> -->
