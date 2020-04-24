@@ -41,9 +41,13 @@ class Neuro(Resource):
                 counter.value += 1
             parser = reqparse.RequestParser()
             parser.add_argument("sequence", required = True)
+            parser.add_argument("sens", required = True)
+            parser.add_argument("num_matches", required = True)
 
             args = parser.parse_args()
             seq = args["sequence"]
+            sens = float(args["sens"])
+            num_matches = int(args["num_matches"])
             # data["sequence"].append(seq)
             logging.info("Seq " + seq + " with id " + str(id) + " from ip " +request.remote_addr)
             parse(seq, id)
@@ -55,7 +59,8 @@ class Neuro(Resource):
             # print("joined")
             # predict(id)
             dot_bracket_string = to_string(id)
-            aligned_dot = align_sequence(seq, dot_bracket_string)
+            print(dot_bracket_string)
+            aligned_dot = align_sequence(seq, dot_bracket_string, sens, num_matches)
             file1 = open("./pics/"+str(id)+"_pred.png", "rb")
             img1 = file1.read()
             file2 = open("./pics/"+str(id)+"_binarized.png", "rb")

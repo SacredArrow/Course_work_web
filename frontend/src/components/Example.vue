@@ -23,14 +23,40 @@
         Your sequence contains <strong> invalid characters</strong>! Should only contain A, C, G and U.
       </div>
     </article>
-    <div class="box">
-      <textarea class="textarea is-family-monospace" readonly v-model="result">This content is readonly</textarea>
+    <div class = "columns">
+      <div class = "column">
+<label class="label">Sensitivity of alignment</label>
+        <div class="field is-grouped is-grouped-centered">
+
+  <div class="control ">
+    <input class="input"  type="text" v-model="sens">
+  </div>
+</div>
+  </div>
+  <div class = "column">
+    <label class="label">Minimum number of matches in local alignment</label>
+            <div class="field is-grouped is-grouped-centered">
+
+      <div class="control ">
+        <input class="input"  type="text" v-model="num_matches">
+      </div>
     </div>
-    <!-- <button class="button is-warning" v-on:click="reverseMessage">Перевернуть сообщение</button> -->
+  </div>
+  </div>
     <div class="buttons is-centered">
       <button class="button is-warning" v-bind:class="{ 'is-loading': isLoading}" v-on:click="sendSequence">Send sequence</button>
       <button class="button is-success" v-on:click="pasteExample">Example sequence</button>
     </div>
+    <div class="box">
+      <h1 class="title">Aligned result</h1>
+      <textarea class="textarea is-family-monospace" style="white-space:pre;" readonly v-model="result">This content is readonly</textarea>
+    </div>
+    <div class="box">
+      <h1 class="title">Unaligned result</h1>
+      <textarea class="textarea is-family-monospace" readonly v-model="raw_result" ref="prev">This content is readonly</textarea>
+    </div>
+    <!-- <button class="button is-warning" v-on:click="reverseMessage">Перевернуть сообщение</button> -->
+
     <section class="section">
       <div class="columns" v-if="show_images">
         <div class="column">
@@ -79,8 +105,13 @@ export default { // TODO: Sanitizing, beautfying
       seq: '',
       id: 0,
       result: 'Result will be shown here',
+      raw_result: 'Unaligned result will be shown here',
       isLoading: false,
-      error: false
+      error: false,
+      sens: 0.3,
+      num_matches: 3,
+      width: null,
+      num_symbols: null
     }
   },
   computed: {
@@ -91,10 +122,18 @@ export default { // TODO: Sanitizing, beautfying
     //   return this.seq + "\n" + this.result
     // }
   },
+  mounted() {
+    this.getWindowWidth();
+  },
   methods: {
     // reverseMessage: function () {   // Testing
     //   this.message = this.message.split('').reverse().join('')
     // },
+    getWindowWidth() {
+      this.width = this.$refs.prev.clientWidth;
+      this.num_symbols = Math.floor(this.width / 11);
+    }
+  ,
     sendSequence: function() { // Post
       this.seq = this.seq.toUpperCase()
       // this.show_images = false
@@ -110,16 +149,33 @@ export default { // TODO: Sanitizing, beautfying
       this.isLoading = true
       this.$http
         .post(this.address, {
-          sequence: this.seq
+          sequence: this.seq,
+          sens: this.sens,
+          num_matches: this.num_matches
         })
         .then(response => {
           this.img1 = response.data.img1;
           this.img2 = response.data.img2;
           this.show_images = true;
           this.id = response.data.id;
-          this.result = this.seq + "\n" + response.data.seq;
+          // this.result = this.seq + "\n" + response.data.seq;
+          var re = new RegExp('.{1,' + this.num_symbols+ '}', 'g');
+
+          var slices1 = this.seq.match(re);
+          // console.log(this.seq.match(re));
+          var slices2 = response.data.seq.match(re);
+          this.result = '';
+          for (var i = 0; i < slices1.length; i++) {
+            this.result+=slices1[i] + "\n" + slices2[i]+ "\n";
+          }
+          slices2 = response.data.raw_dot.match(re);
+          this.raw_result = '';
+          for (i = 0; i < slices1.length; i++) {
+            this.raw_result+=slices1[i] + "\n" + slices2[i]+ "\n";
+          }
+          // console.log(this.result);
           this.isLoading = false;
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function(error) {
           console.log(error);

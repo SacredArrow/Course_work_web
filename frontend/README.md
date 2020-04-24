@@ -1,5 +1,5 @@
-# hello-world
-
+# SecondaryStructurePredictor_frontend
+See `src/components/Example.vue` for the main file.
 ## Project setup
 ```
 npm install
