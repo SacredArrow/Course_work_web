@@ -60,7 +60,7 @@ class Neuro(Resource):
             # predict(id)
             dot_bracket_string = to_string(id)
             print(dot_bracket_string)
-            aligned_dot = align_sequence(seq, dot_bracket_string, sens, num_matches)
+            aligned_dot = align_sequence(seq, dot_bracket_string, sens, num_matches, 5) # Maybe make threshold a parameter
             file1 = open("./pics/"+str(id)+"_pred.png", "rb")
             img1 = file1.read()
             file2 = open("./pics/"+str(id)+"_binarized.png", "rb")

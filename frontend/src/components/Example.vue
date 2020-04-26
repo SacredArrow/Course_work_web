@@ -44,7 +44,7 @@
   </div>
   </div>
     <div class="buttons is-centered">
-      <button class="button is-warning" v-bind:class="{ 'is-loading': isLoading}" v-on:click="sendSequence">Send sequence</button>
+      <button class="button is-warning" v-bind:class="{ 'is-loading': isLoading}" v-on:click="sendSequence" v-bind:disabled="isDisabled">Send sequence</button>
       <button class="button is-success" v-on:click="pasteExample">Example sequence</button>
     </div>
     <div class="box">
@@ -129,6 +129,9 @@ export default { // TODO: Sanitizing, beautfying
     address: function() {
       return 'http://' + this.ip + ':' + this.port + '/neuro'
     },
+    isDisabled: function() {
+      return this.seq.length == 0;
+    }
     // result_with_original: function() {
     //   return this.seq + "\n" + this.result
     // }
